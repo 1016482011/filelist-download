@@ -1,3 +1,4 @@
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const fs = require('fs')
@@ -9,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.post('/file/list', (req, res) => {
-  fs.readdir(`../../java/logs/${req.body.name}`, function(err, files) {
+  fs.readdir(`/root/filespath/${req.body.name}`, function(err, files) {
     if (err) {
       res.send({ code: 1, data: err, message: '查询失败' })
     }
@@ -18,7 +19,7 @@ app.post('/file/list', (req, res) => {
 })
 
 app.get('/file/download', (req, res) => {
-  const filePath = `../../java/logs/${req.query.name}/${req.query.file}`
+  const filePath = `/root/filespath/${req.query.name}/${req.query.file}`
   const stats = fs.statSync(filePath)
   if (stats.isFile()) {
     res.set({
